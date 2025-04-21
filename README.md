@@ -1,4 +1,4 @@
-# SEP10 Freedom Project
+# SEP11 Freedom Project
 by **X**
 
 ## Context
