@@ -70,129 +70,122 @@
 // below is the code we conjoined from varied demos and tutorial videos
 
 
+    // func to create blood machine
+    function createBloodMachine() {
+        const machineGroup = new BABYLON.TransformNode("machineGroup", scene); // a node in babylon can hold other nodes and is equivalent to a parent and child in regular code by managing code under the node which includes aspects like position, rotation, scale, etc. This specific node is named machineGroup and it will serve as parent for all machine components, allowing for multiple transformations to happen at once when reffering to it
 
 
-      // func to create blood machine
-      function createBloodMachine() {
-          const machineGroup = new BABYLON.TransformNode("machineGroup", scene); // a node in babylon can hold other nodes and is equivalent to a parent and child in regular code by managing code under the node which includes aspects like position, rotation, scale, etc. This specific node is named machineGroup and it will serve as parent for all machine components, allowing for multiple transformations to happen at once when reffering to it
+        // create machine components
+        const components = [ // // array named components containing shape type, params, and position, essentially making a list of customizables we can choose from to draw our model
+            { type: 'base', params: { height: 0.5, width: 2, depth: 2 }, position: new BABYLON.Vector3(0, 0.25, 0) }, // "new BABYLON.Vector3" was a commonly associated babylon type associated with positions in several babylon demos making it necessary to make the position function, we would encounter more varities of these types for different babylon parameteres throughout the proj.
+            { type: 'cylinder', params: { height: 3, diameter: 0.5 }, position: new BABYLON.Vector3(0, 2, 0) },
+            { type: 'cylinder', params: { height: 1, diameter: 0.5 }, position: new BABYLON.Vector3(1, 1.5, 0) },
+            { type: 'sphere', params: { diameter: 1 }, position: new BABYLON.Vector3(0, 3, 0) },
+            { type: 'cylinder', params: { height: 2, diameter: 0.3 }, position: new BABYLON.Vector3(-1, 1, 0) }
+        ];
 
-          // create machine components
-          const components = [ // array named components containing shape type, params, and position, essentially making a list of customizables we can choose from to draw our model
-              { type: 'base', params: { height: 0.5, width: 2, depth: 2 }, position: new BABYLON.Vector3(0, 0.25, 0) }, // "new BABYLON.Vector3" was a commonly associated babylon type associated with positions in several babylon demos making it necessary to make the position function, we would encounter more varities of these types for different babylon parameteres throughout the proj.
-              { type: 'cylinder', params: { height: 3, diameter: 0.5 }, position: new BABYLON.Vector3(0, 2, 0) },
-              { type: 'cylinder', params: { height: 1, diameter: 0.5 }, position: new BABYLON.Vector3(1, 1.5, 0) },
-              { type: 'sphere', params: { diameter: 1 }, position: new BABYLON.Vector3(0, 3, 0) },
-              { type: 'cylinder', params: { height: 2, diameter: 0.3 }, position: new BABYLON.Vector3(-1, 1, 0) }
-          ];
+        components.forEach(component => createComponent(component, machineGroup)); // forEach loop established to iterate over each component
 
-          components.forEach(component => createComponent(component, machineGroup)); // forEach loop established to iterate over each component
+        // add small outer spheres representing blood components
+        const bloodComponents = [
+          // BABYLON.Color3 was another babylon type we found associated with the color element in babylon demos
+            { color: new BABYLON.Color3(1, 0, 0), label: "Red Blood Cells" }, // referring back to text planes and customizing them
+            { color: new BABYLON.Color3(0, 1, 0), label: "Plasma" },
+            { color: new BABYLON.Color3(0, 0, 1), label: "White Blood Cells" },
+            { color: new BABYLON.Color3(1, 1, 0), label: "Platelets" },
+            { color: new BABYLON.Color3(1, 0, 1), label: "Concentrated" },
+            { color: new BABYLON.Color3(0, 1, 1), label: "Other" }
+        ];
 
-          // add six small outer spheres of different colors to represent bloood comps.
-          const colors = [
-            // BABYLON.Color3 was another babylon type we found associated with the color element in babylon demos
-              new BABYLON.Color3(1, 0, 0), // red, red blood cells
-              new BABYLON.Color3(0, 1, 0), // green, plasma
-              new BABYLON.Color3(0, 0, 1), // blue, white blood cells
-              new BABYLON.Color3(1, 1, 0), // yellow, platelets
-              new BABYLON.Color3(1, 0, 1), // magenta, conc.
-              new BABYLON.Color3(0, 1, 1)  // cyan, other
-          ];
+        bloodComponents.forEach((component, index) => { // loop takes func that receives each component and its index into bloodComponents array
+          //referring back to babylon vector 3 for positioning
+            const position = new BABYLON.Vector3(Math.cos(index * Math.PI / 3) * 3, 0.5, Math.sin(index * Math.PI / 3) * 3); // sin calculates x and the index is multiplied by pie/3 to space the spheres evenly around a circle (60 degrees apart) while sin calculated z in the same way but is reflected in the distance from the center and y is set to .5 so that it's slightly above ground
+            createSphere("outerSphere" + index, 0.5, position, machineGroup, component.color); // calling together all the params
+            addTextToSphere(component.label, position, machineGroup);
+        });
 
-          colors.forEach((color, index) => {
-              const position = new BABYLON.Vector3(Math.cos(index * Math.PI / 3) * 3, 0.5, Math.sin(index * Math.PI / 3) * 3);
-              createSphere("outerSphere" + index, 0.5, position, machineGroup, color);
-              addTextToSphere("Sphere " + (index + 1), position, machineGroup);
-          });
+        // add mouse hover effect
+        addMouseHoverEffect(machineGroup);
+    }
 
-          // Add mouse hover effect
-          addMouseHoverEffect(machineGroup);
-      }
+    // func to create a component
+    function createComponent(component, parent) {
+        switch (component.type) { // switch statement to determine which type of component to create based on component.type (like a toggle function in general js)
+            case 'base':
+                createBase(parent, component.params, component.position); // component would be the object containing type (cylinder, base, sphere) and params while the parent would hold that component
+                break;
+                // for cylinder and sphere, Math.random() is used to specifically identify that sphere/cylinder being that there are multiple of them
+            case 'cylinder':
+                createCylinder("cylinder" + Math.random(), component.params.height, component.params.diameter, component.position, parent); //params are all brought together into one so that we can refer to this single case when drawing our entire model
+            case 'sphere':
+                createSphere("sphere" + Math.random(), component.params.diameter, component.position, parent);
+                break;
+        }
+    }
 
-      // Helper function to create a component
-      function createComponent(component, parent) {
-          switch (component.type) {
-              case 'base':
-                  createBase(parent, component.params, component.position);
-                  break;
-              case 'cylinder':
-                  createCylinder("cylinder" + Math.random(), component.params.height, component.params.diameter, component.position, parent);
-                  break;
-              case 'sphere':
-                  createSphere("sphere" + Math.random(), component.params.diameter, component.position, parent);
-                  break;
-          }
-      }
+    // func to create base
+    function createBase(parent, { height, width, depth }, position) { // 3 main params
+        const base = BABYLON.MeshBuilder.CreateBox("base", { height, width, depth }, scene); // babylon mesh builder is another specific babylon type we found associated with the tool in its demos where this babylon class specifically creates a box base with specific dimensions. The scene param is also used to make sure the dimension gets rendered
+        base.material = new BABYLON.StandardMaterial("baseMaterial", scene); // BABYLON.StandardMaterial is another specific babylon type we found associated with the tool, this one specifically helped us set the color of this dimension to a light gray
+        base.material.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5);
+        return base;
+    }
 
-      // Helper function to create the base
-      function createBase(parent, { height, width, depth }, position) {
-          const base = BABYLON.MeshBuilder.CreateBox("base", { height, width, depth }, scene);
-          base.position = position; // Set the position of the base
-          base.parent = parent; // Set the parent to the machine group
-          base.material = new BABYLON.StandardMaterial("baseMaterial", scene);
-          base.material.diffuseColor = new BABYLON.Color3(0.5, 0.5, 0.5); // Gray color
-          return base; // Return the created base
-      }
+    // func to create cylinder with color
+    function createCylinder(name, height, diameter, position, parent) { // similar process occurs here w/ the mesh builder, color diffusor and other babylon types
+        const cylinder = BABYLON.MeshBuilder.CreateCylinder(name, { height, diameterTop: diameter, diameterBottom: diameter }, scene);
+        cylinder.position = position;
+        cylinder.parent = parent;
+        cylinder.material = new BABYLON.StandardMaterial(name + "Material", scene);
+        cylinder.material.diffuseColor = new BABYLON.Color3(0.2, 0.6, 0.8);
+        return cylinder;
+    }
 
-      // Helper function to create a cylinder with color
-      function createCylinder(name, height, diameter, position, parent) {
-          const cylinder = BABYLON.MeshBuilder.CreateCylinder(name, { height, diameterTop: diameter, diameterBottom: diameter }, scene);
-          cylinder.position = position; // Set the position of the cylinder
-          cylinder.parent = parent; // Set the parent to the machine group
-          cylinder.material = new BABYLON.StandardMaterial(name + "Material", scene);
-          cylinder.material.diffuseColor = new BABYLON.Color3(0.2, 0.6, 0.8); // Blue color
-          return cylinder; // Return the created cylinder
-      }
+    // Helper function to create a sphere with color
+    function createSphere(name, diameter, position, parent, color) { // similar process occurs here w/ the mesh builder, color diffusor and other babylon types
+        const sphere = BABYLON.MeshBuilder.CreateSphere(name, { diameter }, scene);
+        sphere.position = position;
+        sphere.parent = parent;
+        sphere.material = new BABYLON.StandardMaterial(name + "Material", scene);
+        sphere.material.diffuseColor = color || new BABYLON.Color3(0, 50, 20);
+        return sphere;
+    }
 
-      // Helper function to create a sphere with color
-      function createSphere(name, diameter, position, parent, color) {
-          const sphere = BABYLON.MeshBuilder.CreateSphere(name, { diameter }, scene);
-          sphere.position = position; // Set the position of the sphere
-          sphere.parent = parent; // Set the parent to the machine group
-          sphere.material = new BABYLON.StandardMaterial(name + "Material", scene);
-          sphere.material.diffuseColor = color || new BABYLON.Color3(0, 50, 20); // Default to orange if no color is provided
-          return sphere; // Return the created sphere
-      }
+    // func to add text to spheres
+    function addTextToSphere(text, position, parent) { // 3 main params
+        const dynamicTexture = new BABYLON.DynamicTexture("dynamicTexture", 512, scene, true); // var is created to hold these properties
+        dynamicTexture.drawText(text, null, 250, "bold 70px Arial", "white"); // text is drawn onto the dynamic text
 
-      // Helper function to add text to a sphere
-      function addTextToSphere(text, position, parent) {
-          const dynamicTexture = new BABYLON.DynamicTexture("dynamicTexture", 512, scene, true);
-          dynamicTexture.drawText(text, null, 250, "bold 44px Arial", "white", "transparent");
+        const plane = BABYLON.MeshBuilder.CreatePlane("textPlane", { size: 1 }, scene); // plan is created to serve as surface for the labels
+        plane.material = new BABYLON.StandardMaterial("textMaterial", scene); // default texture for the surface (basically the surface as a whole) is made sure to be rendered
+        plane.material.diffuseTexture = dynamicTexture; // makes text visible on plane by attaching the two properties
+        plane.position = position.add(new BABYLON.Vector3(0, 0.5, 0)); // assigning position to the plane so that its slightly above sphere
+        plane.parent = parent; // plane is set as child so that it moves in sync with the sphere
+    }
 
-          const plane = BABYLON.MeshBuilder.CreatePlane("textPlane", { size: 1 }, scene);
-          plane.material = new BABYLON.StandardMaterial("textMaterial", scene);
-          plane.material.diffuseTexture = dynamicTexture;
-          plane.position = position.add(new BABYLON.Vector3(0, 0.5, 0)); // Position above the sphere
-          plane.parent = parent; // Set the parent to the machine group
-      }
+    // func to add mouse hover effect
+    function addMouseHoverEffect(parent) {
+        parent.getChildren().forEach(child => {
+            child.actionManager = new BABYLON.ActionManager(scene);
+            const originalColor = child.material.diffuseColor.clone();
 
-      // Function to add mouse hover effect
-      function addMouseHoverEffect(parent) {
-          parent.getChildren().forEach(child => {
-              child.actionManager = new BABYLON.ActionManager(scene);
+            child.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, function() {
+                child.material.diffuseColor = new BABYLON.Color3(1, 0, 0);
+            }));
 
-              // Store the original color
-              const originalColor = child.material.diffuseColor.clone();
+            child.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, function() {
+                child.material.diffuseColor = originalColor;
+            }));
+        });
+    }
 
-              // Register action for mouse over
-              child.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, function() {
-                  child.material.diffuseColor = new BABYLON.Color3(1, 0, 0); // Change to red on hover
-              }));
+    // Create the complex machine
+    createBloodMachine();
 
-              // Register action for mouse out
-              child.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, function() {
-                  child.material.diffuseColor = originalColor; // Reset to original color
-              }));
-          });
-      }
-
-
-      // Create the complex machine
-      createBloodMachine();
-
-      // Render loop
-      engine.runRenderLoop(() => {
-          scene.render(); // Continuously render the scene
-      });
+    // Render loop
+    engine.runRenderLoop(() => {
+        scene.render();
+    });
 
 
 
