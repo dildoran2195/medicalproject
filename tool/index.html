@@ -163,26 +163,33 @@
         plane.parent = parent; // plane is set as child so that it moves in sync with the sphere
     }
 
-    // func to add mouse hover effect
-    function addMouseHoverEffect(parent) {
+    // func to add mouse hover effect using conditionals
+    function addMouseHoverEffect(parent) { // takes parent and iterates through its children. For each child it checks if it has a material and if it does it sets up mouse hover to add that missing material once the user hovers over a shape using the ActionManager (equivalent to event listener in general js)
         parent.getChildren().forEach(child => {
-            child.actionManager = new BABYLON.ActionManager(scene);
-            const originalColor = child.material.diffuseColor.clone();
+            if (child.material) { // check if child has a material
+                child.actionManager = new BABYLON.ActionManager(scene);
+                const originalColor = child.material.diffuseColor.clone();
 
-            child.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, function() {
-                child.material.diffuseColor = new BABYLON.Color3(1, 0, 0);
-            }));
+                // changes the child's color to red when the mouse hovers over it
+                child.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, function() {
+                    child.material.diffuseColor = new BABYLON.Color3(1, 0, 0); // change to red on hover
+                }));
 
-            child.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, function() {
-                child.material.diffuseColor = originalColor;
-            }));
+                // reverts the color back to its original state once mouse leaves
+                child.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, function() {
+                    child.material.diffuseColor = originalColor;
+                }));
+            } else {
+                console.log("materials nonexistant"); // logs but doesn't display
+            }
         });
     }
 
-    // Create the complex machine
+
+    // draw the entire blood machine that we taught the computer to draw
     createBloodMachine();
 
-    // Render loop
+    // render loop so that it continously updates and is generally smooth (taken from default playground scene)
     engine.runRenderLoop(() => {
         scene.render();
     });
