@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
+
+
+
  <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    <title>Artificial Blood Diagram</title>
 
 
    <style>
+
      html,
      body {
        overflow: hidden;
@@ -37,7 +42,12 @@
 
    <script>
 
-
+const loader = new THREE.GLTFLoader();
+loader.load('tool/index.html', function (gltf) {
+    scene.add(gltf.scene);
+}, undefined, function (error) {
+    console.error(error);
+});
 
 
 // below is the default babylon playground code automatically established in every canvas
