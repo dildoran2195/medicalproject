@@ -11,6 +11,16 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -8081,7 +8091,7 @@ textarea.form-control-lg {
 
 .text-white {
   --bs-text-opacity: 1;
-  color: rgba(44, 52, 82) !important;
+  color: rgba(80, 90, 110) !important;
 }
 
 .text-body {
@@ -10856,28 +10866,6 @@ h4 {
 
 h5 {
   line-height: 3;
-}
-
-img{
-  width: 500px;
-  }
-
-#gut {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    line-height: 1.5;
-
-  }
-
-#bone {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  line-height: 1.5;
-
 }
 
  #mainNav {
