@@ -12,7 +12,7 @@ We used HTML, CSS, Bootstrap, and Github. We also chose to independently study *
 
 [Product](https://dildoran2195.github.io/medicalproject/)
 
-[Presentation]([https://docs.google.com/presentation/d/1GjRuum40-J1fS3SfWq6IdnIMmfQhBaFJrWBQh-q9T4Q/edit?slide=id.g359dfb2abcd_0_729#slide=id.g359dfb2abcd_0_729](https://docs.google.com/presentation/d/1GjRuum40-J1fS3SfWq6IdnIMmfQhBaFJrWBQh-q9T4Q/edit?usp=sharing))
+[Presentation] [https://docs.google.com/presentation/d/1GjRuum40-J1fS3SfWq6IdnIMmfQhBaFJrWBQh-q9T4Q/edit?slide=id.g359dfb2abcd_0_729#slide=id.g359dfb2abcd_0_729](https://docs.google.com/presentation/d/1GjRuum40-J1fS3SfWq6IdnIMmfQhBaFJrWBQh-q9T4Q/edit?usp=sharing))
 
 ## Implications
 ##### PROS
