@@ -1,24 +1,27 @@
 # SEP11 Freedom Project
-by **X**
+by **Michaela Arendac & Dildora Norbekova**
 
 ## Context
-I am a student at [HSTAT](https://www.hstat.org/) in the [Software Engineering Program](https://hstatsep.github.io/). The "Freedom Project" for SEP10 is a year-long project all about making a website that informs the viewer of the current and future innovations in the topic of my choosing.
+We are students at [HSTAT](https://www.hstat.org/) in the [Software Engineering Program](https://hstatsep.github.io/). The "Freedom Project" for SEP10 is a year-long project all about making a website that informs the viewer of the current and future innovations in the topic of our choosing.
 
-For my project, I chose the topic of **X**. 
+For our project, we chose the topic of **medicine**. 
 
-I used HTML, CSS, Bootstrap, and Github. I also chose to independently study **X** in order to help me make by website.
+We used HTML, CSS, Bootstrap, and Github. We also chose to independently study **Babylon** in order to help me make our website.
 
 ## Links
 
-[Product]()
+[Product](https://dildoran2195.github.io/medicalproject/)
 
-[Presentation]()
+[Presentation](https://docs.google.com/presentation/d/1GjRuum40-J1fS3SfWq6IdnIMmfQhBaFJrWBQh-q9T4Q/edit?usp=sharing)
 
 ## Implications
 ##### PROS
-* 
+* We were able to learn JavaScript components including arrays, conditionals, objects, etc.
+* We were also able to learn Babylon components (more in depth JS) including the application of textures, meshes, shapes, etc.
+* The project as a whole allowed us to reflect and improve upon primarily our organization and correlation skills which will better prepare us for future projects.   
 ##### CONS
-* 
+* We weren't able to execute all of our intial visions including more machines and a gallery walk type of simulation due to continuous complications including our lacking knowledge on every Babylon attribute.
+* Being that this project was a collaboration, we encountered many merging conflicts which ended up prolonging our scheduling. 
 
 
 ## Blog
