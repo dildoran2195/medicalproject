@@ -19,7 +19,7 @@
 
     const sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 2 }, scene);
     const material = new BABYLON.StandardMaterial("sphereMat", scene);
-    material.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/bricktile.jpg", scene);
+    material.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/bricktile.jpg", scene); // this
     sphere.material = material;
 
     engine.runRenderLoop(() => {
